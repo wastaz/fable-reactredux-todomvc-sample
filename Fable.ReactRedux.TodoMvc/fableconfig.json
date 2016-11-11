@@ -1,0 +1,28 @@
+{
+  "module": "commonjs",
+  "sourceMaps": true,
+  "projFile": "./Fable.ExtractReduxBindings.fsproj",
+  "outDir": "temp",
+  "babelPlugins": [ "transform-runtime" ],
+  "scripts": {
+    "prebuild": "npm install",
+    "postbuild": "webpack"
+  },
+  "targets": {
+    "debug": {
+      "watch": true,
+      "symbols": ["DEV_SERVER"]
+    },
+    "production": {
+      "sourceMaps": false,
+        "scripts": {
+          "postbuild": "node node_modules/webpack/bin/webpack -p"
+        }
+      },
+    "watch": {
+      "scripts": {
+        "postbuild": "webpack --watch"
+      }
+    }
+  }
+}
