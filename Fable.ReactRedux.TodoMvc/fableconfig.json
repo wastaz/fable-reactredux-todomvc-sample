@@ -1,7 +1,7 @@
 {
   "module": "commonjs",
   "sourceMaps": true,
-  "projFile": "./Fable.ExtractReduxBindings.fsproj",
+  "projFile": "./Fable.ReactRedux.TodoMvc.fsproj",
   "outDir": "temp",
   "babelPlugins": [ "transform-runtime" ],
   "scripts": {
@@ -11,14 +11,14 @@
   "targets": {
     "debug": {
       "watch": true,
-      "symbols": ["DEV_SERVER"]
+      "symbols": [ "DEV_SERVER" ]
     },
     "production": {
       "sourceMaps": false,
-        "scripts": {
-          "postbuild": "node node_modules/webpack/bin/webpack -p"
-        }
-      },
+      "scripts": {
+        "postbuild": "node node_modules/webpack/bin/webpack -p"
+      }
+    },
     "watch": {
       "scripts": {
         "postbuild": "webpack --watch"
