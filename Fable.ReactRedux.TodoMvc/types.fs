@@ -1,9 +1,8 @@
 ﻿module Types
 
-type EmptyProps() = class end
-type EmptyCtx() = class end
+open Fable.Core
 
-type TodoItem = {
+type [<Fable.Core.Pojo>] TodoItem = {
     id : int
     completed : bool
     description : string
@@ -15,7 +14,7 @@ type Visibility =
     | Active
     | Completed
 
-type Msg =
+type [<Fable.Core.Pojo>] Msg =
     | InitList of TodoItem list
     | AddTodo of TodoItem
     | DeleteTodo of int
@@ -25,7 +24,7 @@ type Msg =
     | HideError
     interface Fable.Import.ReactRedux.IDispatchable
 
-type ApplicationState = {
+type [<Fable.Core.Pojo>] ApplicationState = {
     todos : TodoItem list
     visibilityFilter : Visibility
     error : string option

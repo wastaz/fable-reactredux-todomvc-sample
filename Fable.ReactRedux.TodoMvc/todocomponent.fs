@@ -5,7 +5,7 @@ open Fable.Helpers.React
 module R = Fable.Helpers.React
 open R.Props
 
-type TodoProps = {
+type [<Fable.Core.Pojo>] TodoProps = {
     toggle : unit -> unit
     delete : unit -> unit
     completed : bool

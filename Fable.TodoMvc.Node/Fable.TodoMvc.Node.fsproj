@@ -50,7 +50,6 @@
     <Compile Include="index.fs" />
     <None Include="fableconfig.json" />
     <None Include="package.json" />
-    <None Include="webpack.config.js" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

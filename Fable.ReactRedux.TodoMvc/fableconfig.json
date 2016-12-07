@@ -5,7 +5,6 @@
   "outDir": "temp",
   "babelPlugins": [ "transform-runtime" ],
   "scripts": {
-    "prebuild": "npm install",
     "postbuild": "webpack"
   },
   "targets": {

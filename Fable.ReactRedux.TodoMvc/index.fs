@@ -10,11 +10,11 @@ module R = Fable.Helpers.React
 
 Node.require.Invoke("core-js") |> ignore
 
-let createApp _ =
+let createApp initialState =
     R.div [] [
         AddTodoComponent.createAddTodoComponent ()
         TodoListComponent.createTodoList TodoListComponent.defaultProps
-        R.fn FooterComponent.createFooter None []
+        R.fn FooterComponent.createFooter (obj()) []
     ]
 
 let initialStoreState = { 
@@ -24,9 +24,9 @@ let initialStoreState = {
 }
 
 let middleware = Redux.applyMiddleware(ReduxThunk.middleware, unionMiddleware)
-let store = createStore Reducer.reduceTodos initialStoreState middleware
+let store = createStore Reducer.reduceTodos initialStoreState (Some middleware)
 
-let provider = createProvider store (R.fn createApp None [])
+let provider = createProvider store (R.fn createApp initialStoreState [])
 
 ReactDom.render(provider, Browser.window.document.getElementById "content") |> ignore
 

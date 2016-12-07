@@ -54,7 +54,7 @@ app.route("/todo")
             |> (+) 1
          let item = { id = newId; description = dto.description; completed = dto.completed }
          state <- Map.add newId item state
-         res.status(201).send(toJson item) |> box
+         res.status(float 201).send(toJson item) |> box
     )
     .get(toHandler <| fun req res _ ->
         let items = state |> Map.toList |> List.map snd |> List.toArray
@@ -68,12 +68,12 @@ app.route("/todo/:id")
         if Map.containsKey id state then
             state |> Map.find id |> toJson |> res.send |> box
         else
-            res.sendStatus(404) |> box
+            res.sendStatus(float 404) |> box
     )
     .delete(toHandler <| fun req res _ ->
         let id = req.``params``?id |> unbox<int>
         state <- Map.remove id state
-        res.sendStatus(204) |> box
+        res.sendStatus(float 204) |> box
     )
     .put(toHandler <| fun req res _ ->
         let id = req.``params``?id |> unbox<int>
@@ -83,7 +83,7 @@ app.route("/todo/:id")
             state <- Map.add id item state
             res.send(toJson item) |> box
         else
-            res.sendStatus(404) |> box
+            res.sendStatus(float 404) |> box
     )
 |> ignore
 
