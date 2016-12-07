@@ -6,7 +6,7 @@ open Types
 module R = Fable.Helpers.React
 open R.Props
 
-type AddTodoProps = {
+type [<Fable.Core.Pojo>] AddTodoProps = {
     onAddTodo : string -> unit
 }
 
@@ -15,7 +15,7 @@ let private defaultProps = {
 }
 
 type private AddTodo (props, ctx) =
-    inherit React.Component<AddTodoProps, EmptyCtx>(props, ctx)
+    inherit React.Component<AddTodoProps, obj>(props)
 
     let mutable (inputElement : Fable.Import.Browser.Element option) = None
 

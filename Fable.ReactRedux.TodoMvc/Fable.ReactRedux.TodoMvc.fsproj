@@ -33,17 +33,23 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\Fable.ReactRedux.TodoMvc.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="node_modules/fable-import-react/Fable.Import.React.fs" />
-    <Compile Include="node_modules/fable-import-react/Fable.Helpers.React.fs" />
-    <Compile Include="node_modules/fable-import-fetch/Fable.Import.Fetch.fs" />
-    <Compile Include="node_modules/fable-import-fetch/Fable.Helpers.Fetch.fs" />
-    <Compile Include="node_modules/fable-import-redux/Fable.Import.Redux.fs" />
-    <Compile Include="node_modules/fable-import-redux/Fable.Helpers.Redux.fs" />
-    <Compile Include="node_modules/fable-import-reactredux-opinionated/Fable.Import.ReactRedux.fs" />
-    <Compile Include="node_modules/fable-import-reactredux-opinionated/Fable.Helpers.ReactRedux.fs" />
-    <Compile Include="node_modules/fable-import-reduxthunk/Fable.Import.ReduxThunk.fs" />
-    <Compile Include="node_modules/fable-import-reduxthunk/Fable.Helpers.ReactRedux.ReduxThunk.fs" />
     <None Include="public/index.html" />
     <Compile Include="types.fs" />
     <Compile Include="backend.fs" />
@@ -62,6 +68,21 @@
     <Reference Include="Fable.Core">
       <HintPath>node_modules\fable-core\Fable.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Fable.Import.ReactRedux.Opinionated">
+      <HintPath>node_modules\fable-import-reactredux-opinionated\Fable.Import.ReactRedux.Opinionated.dll</HintPath>
+    </Reference>
+    <Reference Include="Fable.Import.Redux">
+      <HintPath>node_modules\fable-import-redux\Fable.Import.Redux.dll</HintPath>
+    </Reference>
+    <Reference Include="Fable.Import.ReduxThunk">
+      <HintPath>node_modules\fable-import-reduxthunk\Fable.Import.ReduxThunk.dll</HintPath>
+    </Reference>
+    <Reference Include="Fable.PowerPack">
+      <HintPath>node_modules\fable-powerpack\Fable.PowerPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Fable.React">
+      <HintPath>node_modules\fable-react\Fable.React.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -70,22 +91,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
-  <PropertyGroup>
-    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
-  </PropertyGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '11.0'">
-      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
-        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets')">
-        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
-  <Import Project="$(FSharpTargetsPath)" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

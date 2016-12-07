@@ -2,7 +2,9 @@
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.Fetch
+open Fable.PowerPack
+open Fable.PowerPack.Fetch
+open Fable.PowerPack.Fetch.Fetch_types
 
 open Types
 
@@ -37,58 +39,59 @@ let private dispatchShowError (dispatch : ReactRedux.Dispatcher) (time : int<ms>
     )
 
 let addTodo desc (dispatch : ReactRedux.Dispatcher) =
-    async {
+    promise {
         let! response =
-            postRecord(
-                toUrl None, 
-                { description = desc; completed = false }, 
-                [ RequestProperties.Headers jsonHeaders ])
+            postRecord
+                (toUrl None)
+                { description = desc; completed = false } 
+                [ RequestProperties.Headers jsonHeaders ]
         if response.Ok then
-            let! obj = response.json<TodoItem> () |> Microsoft.FSharp.Control.Async.AwaitPromise
+            let! obj = response.json<TodoItem> ()
             Msg.AddTodo obj |> dispatch 
         else
             dispatchShowError dispatch defaultErrorTimeout "Could not add todo item!" 
     } 
-    |> Async.StartAsPromise
+    |> Promise.map ignore
+   
 
 let deleteTodo id (dispatch : ReactRedux.Dispatcher) =
-    async {
+    promise {
         let! response = 
-            fetchAsync(
-                toUrl <| Some id, 
-                [ RequestProperties.Method HttpMethod.DELETE ]) 
+            fetch
+                (toUrl <| Some id)
+                [ RequestProperties.Method HttpMethod.DELETE ]
         if response.Ok then
             Msg.DeleteTodo id |> dispatch
         else
             dispatchShowError dispatch defaultErrorTimeout "Could not delete todo item!"
-    } 
-    |> Async.StartAsPromise
+    }
+    |> Promise.map ignore
 
 let updateTodo todo (dispatch : ReactRedux.Dispatcher) =
-    async {
+    promise {
         let! response = 
-            fetchAsync(
-                toUrl <| Some todo.id,
+            fetch
+                (toUrl <| Some todo.id)
                 [ RequestProperties.Method HttpMethod.PUT 
                   RequestProperties.Body (unbox (Fable.Core.JsInterop.toJson todo))
-                  RequestProperties.Headers jsonHeaders ])
+                  RequestProperties.Headers jsonHeaders ]
         if response.Ok then
             Msg.ToggleTodo(todo.id, todo.completed) |> dispatch
         else
             dispatchShowError dispatch defaultErrorTimeout "Could not toggle todo state!"
-    } 
-    |> Async.StartAsPromise
+    }
+    |> Promise.map ignore
 
 let getAllTodos (dispatch : ReactRedux.Dispatcher) =
-    async {
-        
+    promise {
         let! response =
-            fetchAsync(
-                toUrl None,
-                [ RequestProperties.Headers jsonHeaders ])
+            fetch
+                (toUrl None)
+                [ RequestProperties.Headers jsonHeaders ]
         if response.Ok then
-            let! todos = response.json<TodoItem array> () |> Microsoft.FSharp.Control.Async.AwaitPromise
+            let! todos = response.json<TodoItem array> ()
             todos |> Array.toList |> Msg.InitList |> dispatch
         else
             dispatchShowError dispatch None "Could not fetch toods from server!"
-    } |> Async.StartAsPromise
+    }
+    |> Promise.map ignore

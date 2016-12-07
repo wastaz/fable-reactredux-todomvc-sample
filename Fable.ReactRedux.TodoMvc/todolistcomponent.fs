@@ -8,7 +8,7 @@ open Types
 
 module R = Fable.Helpers.React
 
-type TodoListProps = {
+type [<Fable.Core.Pojo>] TodoListProps = {
     todos : TodoItem list
     error : string option
     initTodoList : unit -> unit
@@ -27,7 +27,7 @@ let defaultProps = {
 open TodoComponent
 
 type private TodoList (props, ctx) =
-    inherit React.Component<TodoListProps, EmptyCtx> (props, ctx)
+    inherit React.Component<TodoListProps, obj> (props)
     
     member x.componentDidMount () =
         props.initTodoList ()
@@ -61,7 +61,7 @@ let private getVisibleTodos (todos : TodoItem list) visibility =
 
 let private mapStateToProps (state : ApplicationState) =
     [
-        "todos" ==> getVisibleTodos state.todos state.visibilityFilter
+        "todos" ==> if isNull (box state.todos) then [] else getVisibleTodos state.todos state.visibilityFilter
         "error" ==> state.error
     ]
 

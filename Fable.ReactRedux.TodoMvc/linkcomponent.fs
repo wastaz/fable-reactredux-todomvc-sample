@@ -6,9 +6,9 @@ open Types
 
 module R = Fable.Helpers.React
 
-type LinkProps = {
+type [<Fable.Core.Pojo>] LinkProps = {
     active : bool
-    children : React.ReactElement<obj> list
+    children : React.ReactElement list
     onClick : unit -> unit
     filter : Visibility
 }
