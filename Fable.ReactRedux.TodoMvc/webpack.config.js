@@ -6,7 +6,7 @@ var cfg = {
   entry: [
     "webpack-dev-server/client?http://localhost:8080",
     "webpack/hot/only-dev-server",
-    "./temp/Fable.ReactRedux.TodoMvc/index"
+    "./temp/index"
   ],
   output: {
     path: path.join(__dirname, "public"),
