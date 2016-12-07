@@ -23,10 +23,10 @@ let initialStoreState = {
     error = None
 }
 
-let middleware = Redux.applyMiddleware(ReduxThunk.middleware, unionMiddleware)
+let middleware = Redux.applyMiddleware ReduxThunk.middleware
 let store = createStore Reducer.reduceTodos initialStoreState (Some middleware)
 
-let provider = createProvider store (R.fn createApp initialStoreState [])
+let provider = createProvider store (R.fn createApp (obj()) [])
 
 ReactDom.render(provider, Browser.window.document.getElementById "content") |> ignore
 
