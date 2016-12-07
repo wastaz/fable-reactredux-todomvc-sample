@@ -61,7 +61,7 @@ let private getVisibleTodos (todos : TodoItem list) visibility =
 
 let private mapStateToProps (state : ApplicationState) =
     [
-        "todos" ==> if isNull (box state.todos) then [] else getVisibleTodos state.todos state.visibilityFilter
+        "todos" ==> getVisibleTodos state.todos state.visibilityFilter
         "error" ==> state.error
     ]
 
