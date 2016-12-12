@@ -1,10 +1,10 @@
 # fable-reactredux-todomvc-sample
 
 This is a small ugly sample todomvc application showing an example of how to combine
-- [fable-import-react](https://www.npmjs.com/package/fable-import-react)
-- [fable-import-redux](https://github.com/wastaz/fable-import-redux)
-- [fable-import-reactredux-opinionated](https://github.com/wastaz/fable-import-reactredux-opinionated)
-- [fable-import-reduxthunk](https://github.com/wastaz/fable-import-reduxthunk)
+- [fable-react](https://www.npmjs.com/package/fable-react)
+- [fable-redux](https://github.com/wastaz/fable-redux)
+- [fable-reactredux](https://github.com/wastaz/fable-reactredux)
+- [fable-reduxthunk](https://github.com/wastaz/fable-reduxthunk)
 
 ## Gettings started
 
