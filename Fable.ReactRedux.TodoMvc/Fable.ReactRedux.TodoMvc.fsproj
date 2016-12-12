@@ -68,14 +68,14 @@
     <Reference Include="Fable.Core">
       <HintPath>node_modules\fable-core\Fable.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Fable.Import.ReactRedux.Opinionated">
-      <HintPath>node_modules\fable-import-reactredux-opinionated\Fable.Import.ReactRedux.Opinionated.dll</HintPath>
+    <Reference Include="Fable.ReactRedux">
+      <HintPath>node_modules\fable-reactredux\Fable.ReactRedux.dll</HintPath>
     </Reference>
-    <Reference Include="Fable.Import.Redux">
-      <HintPath>node_modules\fable-import-redux\Fable.Import.Redux.dll</HintPath>
+    <Reference Include="Fable.Redux">
+      <HintPath>node_modules\fable-redux\Fable.Redux.dll</HintPath>
     </Reference>
-    <Reference Include="Fable.Import.ReduxThunk">
-      <HintPath>node_modules\fable-import-reduxthunk\Fable.Import.ReduxThunk.dll</HintPath>
+    <Reference Include="Fable.ReduxThunk">
+      <HintPath>node_modules\fable-reduxthunk\Fable.ReduxThunk.dll</HintPath>
     </Reference>
     <Reference Include="Fable.PowerPack">
       <HintPath>node_modules\fable-powerpack\Fable.PowerPack.dll</HintPath>
