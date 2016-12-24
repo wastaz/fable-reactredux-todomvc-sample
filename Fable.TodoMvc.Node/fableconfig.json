@@ -3,6 +3,9 @@
   "sourceMaps": true,
   "projFile": "./Fable.TodoMvc.Node.fsproj",
   "outDir": "temp",
+  "scripts": {
+    "postbuild": "webpack"
+  },
   "refs": {
     "Fable.Core": "fable-core/umd"
   }

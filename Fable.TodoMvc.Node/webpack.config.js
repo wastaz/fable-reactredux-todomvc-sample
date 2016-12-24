@@ -13,7 +13,7 @@ fs.readdirSync('node_modules')
 
 var cfg = {
   devtool: "source-map",
-  entry: ["./temp/index"],
+  entry: ["./temp/Fable.TodoMvc.Node/index"],
   target: "node",
   output: {
     path: path.join(__dirname, "public"),
