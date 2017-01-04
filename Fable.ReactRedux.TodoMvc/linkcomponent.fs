@@ -37,16 +37,33 @@ let mapDispatchToProps (dispatch : ReactRedux.Dispatcher) ownProps =
         "onClick" ==> fun _ -> SetVisibility ownProps.filter |> dispatch
     ]
 
+let mapStateToProps2 state ownprops =
+    { ownprops with
+        active = JS.Object.is(state.visibilityFilter, ownprops.filter)
+    }
+
+let mapDispatchToProps2 (dispatch : ReactRedux.Dispatcher) ownprops =
+    { ownprops with
+        onClick = fun _ -> SetVisibility ownprops.filter |> dispatch
+    }
+
+let setDefaultProps visibility children ownprops =
+    { ownprops with
+        filter = visibility
+        children = children
+    }
+
 open Fable.Helpers.ReactRedux
 
 let createFilterLink visibility children =
-    let initial = {
-        filter = visibility
+    let props = {
         active = false
-        onClick = fun () -> ()
         children = children
+        filter = visibility
+        onClick = fun () -> ()
     }
     createConnector ()
-    |> withStateMapperWithProps mapStateToProps
-    |> withDispatchMapperWithProps mapDispatchToProps
-    |> buildFunction createLink initial []
+    |> withStateMapper mapStateToProps2
+    |> withDispatchMapper mapDispatchToProps2
+    |> withProps (setDefaultProps visibility children)
+    |> buildFunction createLink

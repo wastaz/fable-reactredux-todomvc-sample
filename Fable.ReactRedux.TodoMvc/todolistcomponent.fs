@@ -16,14 +16,6 @@ type [<Fable.Core.Pojo>] TodoListProps = {
     onDeleteTodo : int -> unit
 }
 
-let defaultProps = {
-    todos = []
-    error = None
-    initTodoList = fun _ -> ()
-    onToggleTodo = fun _ -> ()
-    onDeleteTodo = fun _-> ()
-}
-
 open TodoComponent
 
 type private TodoList (props, ctx) =
@@ -65,7 +57,12 @@ let private mapStateToProps (state : ApplicationState) =
         "error" ==> state.error
     ]
 
-
+let private mapStateToProps2 (state : ApplicationState) (ownprops : TodoListProps) =
+    { ownprops with
+        error = state.error
+        todos = getVisibleTodos state.todos state.visibilityFilter
+    }
+    
 open Fable.Helpers.ReactRedux
 open Fable.Helpers.ReduxThunk
 
@@ -76,8 +73,22 @@ let private mapDispatchToProps (dispatch : ReactRedux.Dispatcher) =
         "onDeleteTodo" ==> fun id -> Backend.deleteTodo id |> asThunk |> dispatch
     ]
 
-let createTodoList props =
+let private mapDispatchToProps2 (dispatch : ReactRedux.Dispatcher) ownprops =
+    { ownprops with
+        initTodoList = fun () -> Backend.getAllTodos |> asThunk |> dispatch
+        onToggleTodo = fun todo -> Backend.updateTodo { todo with completed = not todo.completed } |> asThunk |> dispatch
+        onDeleteTodo = fun id -> Backend.deleteTodo id |> asThunk |> dispatch
+    }
+
+let private setDefaultProps (ownprops : TodoListProps) =
+    { ownprops with
+        todos = []
+        error = None
+    }
+
+let createTodoList =
     createConnector ()
-    |> withStateMapper mapStateToProps
-    |> withDispatchMapper mapDispatchToProps
-    |> buildComponent<TodoList, _, _, _> props []
+    |> withStateMapper mapStateToProps2
+    |> withDispatchMapper mapDispatchToProps2
+    |> withProps setDefaultProps
+    |> buildComponent<TodoList, _, _, _>

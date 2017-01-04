@@ -10,10 +10,6 @@ type [<Fable.Core.Pojo>] AddTodoProps = {
     onAddTodo : string -> unit
 }
 
-let private defaultProps = {
-    onAddTodo = fun _ -> ()
-}
-
 type private AddTodo (props, ctx) =
     inherit React.Component<AddTodoProps, obj>(props)
 
@@ -52,8 +48,13 @@ let private mapDispatchToProps (dispatch : ReactRedux.Dispatcher) =
         "onAddTodo" ==> fun desc -> dispatch <| asThunk (Backend.addTodo desc)
     ]
 
-let createAddTodoComponent () =
+let private mapDispatchToProps2 (dispatch : ReactRedux.Dispatcher) ownprops =
+    { ownprops with
+        onAddTodo = fun desc -> dispatch <| asThunk (Backend.addTodo desc)
+    }
+
+let createAddTodoComponent =
     createConnector ()
-    |> withDispatchMapper mapDispatchToProps
-    |> buildComponent<AddTodo, _, _, _> defaultProps []
+    |> withDispatchMapper mapDispatchToProps2
+    |> buildComponent<AddTodo, _, _, _>
     

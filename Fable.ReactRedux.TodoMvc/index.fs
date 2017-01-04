@@ -13,7 +13,7 @@ Node.require.Invoke("core-js") |> ignore
 let createApp initialState =
     R.div [] [
         AddTodoComponent.createAddTodoComponent ()
-        TodoListComponent.createTodoList TodoListComponent.defaultProps
+        TodoListComponent.createTodoList ()
         R.fn FooterComponent.createFooter (obj()) []
     ]
 
