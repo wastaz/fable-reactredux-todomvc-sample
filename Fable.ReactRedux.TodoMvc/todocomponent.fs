@@ -16,6 +16,6 @@ let createTodo props =
     R.li 
         [ Style [ (if props.completed then "line-through" else "none") |> box |> TextDecoration ] ] 
         [ 
-            R.text [ OnClick <| fun _ -> props.toggle () ] [ unbox props.text ] 
-            R.button [ OnClick <| fun _ -> props.delete () ] [ unbox "X" ]
+            R.text [ OnClick <| fun _ -> props.toggle () ] [ R.str props.text ] 
+            R.button [ OnClick <| fun _ -> props.delete () ] [ R.str "X" ]
         ]

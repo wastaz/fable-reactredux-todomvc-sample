@@ -38,7 +38,7 @@ type private TodoList (props, ctx) =
             |> Some
         let errorElement =
             props.error
-            |> Option.map (fun e -> R.div [ R.Props.Style [ R.Props.CSSProp.Color "red" ] ] [ unbox e ])
+            |> Option.map (fun e -> R.div [ R.Props.Style [ R.Props.CSSProp.Color "red" ] ] [ R.str e ])
         R.div [] <| List.choose id [ todoList; errorElement ]
 
 
@@ -51,13 +51,7 @@ let private getVisibleTodos (todos : TodoItem list) visibility =
         | Completed -> t.completed
     )
 
-let private mapStateToProps (state : ApplicationState) =
-    [
-        "todos" ==> getVisibleTodos state.todos state.visibilityFilter
-        "error" ==> state.error
-    ]
-
-let private mapStateToProps2 (state : ApplicationState) (ownprops : TodoListProps) =
+let private mapStateToProps (state : ApplicationState) (ownprops : TodoListProps) =
     { ownprops with
         error = state.error
         todos = getVisibleTodos state.todos state.visibilityFilter
@@ -66,14 +60,7 @@ let private mapStateToProps2 (state : ApplicationState) (ownprops : TodoListProp
 open Fable.Helpers.ReactRedux
 open Fable.Helpers.ReduxThunk
 
-let private mapDispatchToProps (dispatch : ReactRedux.Dispatcher) =
-    [
-        "initTodoList" ==> fun () -> Backend.getAllTodos |> asThunk |> dispatch
-        "onToggleTodo" ==> fun todo -> Backend.updateTodo { todo with completed = not todo.completed } |> asThunk |> dispatch
-        "onDeleteTodo" ==> fun id -> Backend.deleteTodo id |> asThunk |> dispatch
-    ]
-
-let private mapDispatchToProps2 (dispatch : ReactRedux.Dispatcher) ownprops =
+let private mapDispatchToProps (dispatch : ReactRedux.Dispatcher) ownprops =
     { ownprops with
         initTodoList = fun () -> Backend.getAllTodos |> asThunk |> dispatch
         onToggleTodo = fun todo -> Backend.updateTodo { todo with completed = not todo.completed } |> asThunk |> dispatch
@@ -88,7 +75,7 @@ let private setDefaultProps (ownprops : TodoListProps) =
 
 let createTodoList =
     createConnector ()
-    |> withStateMapper mapStateToProps2
-    |> withDispatchMapper mapDispatchToProps2
+    |> withStateMapper mapStateToProps
+    |> withDispatchMapper mapDispatchToProps
     |> withProps setDefaultProps
     |> buildComponent<TodoList, _, _, _>

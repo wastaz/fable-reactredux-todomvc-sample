@@ -43,18 +43,13 @@ open Fable.Core.JsInterop
 open Fable.Helpers.ReactRedux
 open Fable.Helpers.ReduxThunk
 
-let private mapDispatchToProps (dispatch : ReactRedux.Dispatcher) =
-    [
-        "onAddTodo" ==> fun desc -> dispatch <| asThunk (Backend.addTodo desc)
-    ]
-
-let private mapDispatchToProps2 (dispatch : ReactRedux.Dispatcher) ownprops =
+let private mapDispatchToProps (dispatch : ReactRedux.Dispatcher) ownprops =
     { ownprops with
         onAddTodo = fun desc -> dispatch <| asThunk (Backend.addTodo desc)
     }
 
 let createAddTodoComponent =
     createConnector ()
-    |> withDispatchMapper mapDispatchToProps2
+    |> withDispatchMapper mapDispatchToProps
     |> buildComponent<AddTodo, _, _, _>
     

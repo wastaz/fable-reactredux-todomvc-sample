@@ -4,12 +4,21 @@ open Types
 
 module R = Fable.Helpers.React
 
+let private allVisibilityLink =
+    LinkComponent.createFilterLink Visibility.All [ R.str "All" ]
+
+let private activeVisibilityLink =
+    LinkComponent.createFilterLink Visibility.Active [ R.str "Active" ]
+
+let private completedVisibilityLink =
+    LinkComponent.createFilterLink Visibility.Completed [ R.str "Completed" ]
+
 let createFooter _ = 
     R.p [] [
         R.text [] [ R.str "Show: "]
-        (LinkComponent.createFilterLink Visibility.All [ R.str "All" ]) ()
+        allVisibilityLink ()
         R.text [] [ R.str " " ]
-        (LinkComponent.createFilterLink Visibility.Active [ R.str "Active" ]) ()
+        activeVisibilityLink ()
         R.text [] [ R.str " " ]
-        (LinkComponent.createFilterLink Visibility.Completed [ R.str "Completed" ]) ()
+        completedVisibilityLink ()
     ]

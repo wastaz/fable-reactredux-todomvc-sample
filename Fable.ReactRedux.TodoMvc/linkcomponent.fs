@@ -26,23 +26,13 @@ let createLink props =
         R.a [ Href "#"; OnClick onClick ]  props.children
 
 open Fable.Core.JsInterop
-let mapStateToProps state ownProps =
-    let isActive = JS.Object.is(state.visibilityFilter, ownProps.filter)
-    [
-        "active" ==> unbox isActive
-    ]
 
-let mapDispatchToProps (dispatch : ReactRedux.Dispatcher) ownProps =
-    [
-        "onClick" ==> fun _ -> SetVisibility ownProps.filter |> dispatch
-    ]
-
-let mapStateToProps2 state ownprops =
+let mapStateToProps state ownprops =
     { ownprops with
         active = JS.Object.is(state.visibilityFilter, ownprops.filter)
     }
 
-let mapDispatchToProps2 (dispatch : ReactRedux.Dispatcher) ownprops =
+let mapDispatchToProps (dispatch : ReactRedux.Dispatcher) ownprops =
     { ownprops with
         onClick = fun _ -> SetVisibility ownprops.filter |> dispatch
     }
@@ -63,7 +53,7 @@ let createFilterLink visibility children =
         onClick = fun () -> ()
     }
     createConnector ()
-    |> withStateMapper mapStateToProps2
-    |> withDispatchMapper mapDispatchToProps2
+    |> withStateMapper mapStateToProps
+    |> withDispatchMapper mapDispatchToProps
     |> withProps (setDefaultProps visibility children)
     |> buildFunction createLink
