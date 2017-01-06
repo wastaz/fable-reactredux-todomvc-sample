@@ -16,19 +16,16 @@ var cfg = {
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "source-map-loader"
-      }
-    ],
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "react-hot-loader"
-    }]
+      rules: [
+          {
+              enforce: "pre",
+              test: /\.js$/,
+              exclude: /node_modules/,
+              loader: "source-map-loader"
+          }
+      ]
   },
+  performance: { hints: false },
   devServer: {
     hot: true,
     contentBase: "public/",
