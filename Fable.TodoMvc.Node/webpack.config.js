@@ -19,13 +19,10 @@ var cfg = {
     path: path.join(__dirname, "public"),
     filename: "bundle.js"
   },
-  plugins: [
-    new webpack.BannerPlugin('require("source-map-support").install();',
-                             { raw: true, entryOnly: false })
-  ],
   module: {
-    preLoaders: [
+    rules: [
       {
+	enforce: "pre",
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "source-map-loader"
